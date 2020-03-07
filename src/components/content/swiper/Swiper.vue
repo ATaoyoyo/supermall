@@ -24,8 +24,8 @@ export default {
   },
   data() {
     return {
-      autoplay:true,
       swiperOption: {
+        autoplay: true,
         pagination: {
           el: '.swiper-pagination',
           dynamicBullets: true

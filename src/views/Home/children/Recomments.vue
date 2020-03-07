@@ -3,7 +3,7 @@
     <div class="recomments-item" v-for="item in recomments" :key="item.index">
       <a :href="item.link">
         <img :src="item.image" alt />
-        <span>{{item.title}}</span>
+        <div class="title">{{item.title}}</div>
       </a>
     </div>
   </div>
@@ -37,7 +37,9 @@ export default {
   width: 4.5rem;
   height: 4.5rem;
 }
-.recomments-item span {
-  display: inline-block;
+.title{
+  color: #666;
+  padding-top: 0.3846rem;
+  font-size: 0.7692rem;
 }
 </style>
