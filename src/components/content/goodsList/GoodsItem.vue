@@ -1,12 +1,12 @@
 <template>
   <div class="goods-list-item">
     <div class="item-img">
-      <img :src="goodsitem.show.img" alt />
+      <img :src="goodsitem.show.img" @load="imgLoad" />
     </div>
     <div class="title">{{goodsitem.title}}</div>
     <div class="item-info">
       <span class="start">{{goodsitem.sale}}人付款</span>
-      <span class="price">{{goodsitem.price | fixMoney()}}</span>
+      <span class="price">{{goodsitem.price | fixMoney(goodsitem.price)}}</span>
     </div>
   </div>
 </template>
@@ -22,9 +22,14 @@ export default {
       }
     }
   },
+  methods: {
+    imgLoad() {
+      this.$bus.$emit('imgLoad')
+    }
+  },
   filters: {
     fixMoney(money) {
-      money = Number.prototype.toFixed(2)
+      money = Number(money).toFixed(2)
       return `￥ ${money}`
     }
   }

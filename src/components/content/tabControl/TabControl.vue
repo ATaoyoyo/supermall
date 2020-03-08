@@ -40,15 +40,17 @@ export default {
   display: flex;
   height: 3.3846rem;
   line-height: 3.3846rem;
-  padding-top: 0.5rem;
+  padding: 0.3rem;
+  background-color: #fff;
 }
 .tab-control-item {
   flex: 1;
   text-align: center;
+  line-height: 43.9998px;
 }
 .active span {
   padding: 0.2rem;
-  border-bottom: 2px solid #ff8198;
+  border-bottom: 0.2308rem solid #ff8198;
 }
 .active {
   color: #ff8198;

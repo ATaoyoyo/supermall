@@ -3,7 +3,7 @@
     <swiper :options="swiperOption" ref="mySwiper">
       <!-- slides -->
       <swiper-slide v-for="item in swiperData" :key="item.index">
-        <img :src="item.image" alt />
+        <img :src="item.image" @load="swiperImgLoad" />
       </swiper-slide>
       <!-- Optional controls -->
       <div class="swiper-pagination" slot="pagination"></div>
@@ -30,6 +30,15 @@ export default {
           el: '.swiper-pagination',
           dynamicBullets: true
         }
+      },
+      isLoad: false
+    }
+  },
+  methods: {
+    swiperImgLoad() {
+      if (!this.isLoad) {
+        this.$emit('swiperImgLoad')
+        this.isLoad = true
       }
     }
   },
