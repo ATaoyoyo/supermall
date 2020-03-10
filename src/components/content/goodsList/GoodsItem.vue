@@ -1,5 +1,5 @@
 <template>
-  <div class="goods-list-item">
+  <div class="goods-list-item" @click="turnToDetail">
     <div class="item-img">
       <img :src="goodsitem.show.img" @load="imgLoad" />
     </div>
@@ -25,6 +25,9 @@ export default {
   methods: {
     imgLoad() {
       this.$bus.$emit('imgLoad')
+    },
+    turnToDetail() {
+      this.$router.push('/detail/' + this.goodsitem.iid)
     }
   },
   filters: {

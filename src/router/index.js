@@ -27,6 +27,11 @@ const routes = [
     path: '/mine',
     name: 'Mine',
     component: () => import('@/views/Mine/Mine.vue')
+  },
+  {
+    path: '/detail/:iid',
+    name: 'Detail',
+    components: () => import('@/views/Detail/Detail.vue')
   }
 ]
 
