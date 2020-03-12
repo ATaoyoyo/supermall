@@ -153,13 +153,13 @@ export default {
       return this.goods[this.currentTab].list
     }
   },
+  // 保留页面停留位置
   activated() {
     this.$refs.scroll.refreshPullUp()
     this.saveY = this.$refs.scroll.scrollTo(0, this.saveY, 0)
   },
   deactivated() {
     this.saveY = this.$refs.scroll.getScrollY()
-    console.log(this.saveY)
   }
 }
 </script>

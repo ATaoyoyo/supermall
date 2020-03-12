@@ -26,6 +26,13 @@ export default {
 .right {
   width: 60px;
 }
+.left,
+.right,
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .center {
   flex: 1;
 }

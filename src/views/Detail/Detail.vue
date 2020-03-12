@@ -1,18 +1,20 @@
 <template>
-  <div>
-    <nav-bar></nav-bar>
+  <div id="detail">
+    <detail-nav></detail-nav>
   </div>
 </template>
 
 <script>
-import NavBar from '@/components/navbar/Navbar.vue'
+import DetailNav from './detailComps/DetailNav'
 export default {
-  components:{
-    NavBar
+  components: {
+    DetailNav
+  },
+  data() {
+    return {}
   }
 }
 </script>
 
-<style>
-
+<style scoped>
 </style>

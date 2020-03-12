@@ -28,6 +28,7 @@ export default {
     },
     turnToDetail() {
       this.$router.push('/detail/' + this.goodsitem.iid)
+      console.log(this.goodsitem.iid)
     }
   },
   filters: {
