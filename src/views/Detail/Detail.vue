@@ -7,6 +7,8 @@
       <detail-shop-info :shop="shop"></detail-shop-info>
       <detail-goods-info :desc="desc" :imgsList="imgsList" @imgLoad="imgLoad"></detail-goods-info>
       <detail-shop-params :params="params"></detail-shop-params>
+      <detail-recomment :rateList="recomments"></detail-recomment>
+      <goods-list :goodslist="recommends"></goods-list>
     </scroll>
   </div>
 </template>
@@ -18,9 +20,11 @@ import DetailBaseInfo from './detailComps/DetailBaseInfo'
 import DetailShopInfo from './detailComps/DetailShopInfo'
 import DetailGoodsInfo from './detailComps/DetailGoodsInfo'
 import DetailShopParams from './detailComps/DetailShopParams'
+import DetailRecomment from './detailComps/DetailRecomment'
 import Scroll from '@/components/common/scroll/Scroll.vue'
+import GoodsList from '@/components/content/goodsList/GoodsList'
 
-import { getDetail, goods, shop, goodsParams } from '@/network/detail.js'
+import { getDetail, goods, shop, goodsParams, rate, getRecommend } from '@/network/detail.js'
 export default {
   name: 'Detail',
   components: {
@@ -30,7 +34,9 @@ export default {
     DetailShopInfo,
     DetailGoodsInfo,
     DetailShopParams,
-    Scroll
+    DetailRecomment,
+    Scroll,
+    GoodsList
   },
   data() {
     return {
@@ -41,14 +47,15 @@ export default {
       goodsInfo: {},
       imgsList: {},
       desc: '',
-      params: {}
+      params: {},
+      recomments: {},
+      recommends: []
     }
   },
   created() {
     this.iid = this.$route.params.iid
     getDetail(this.iid).then(res => {
       const data = res.result
-      console.log(data)
       this.topImages = data.itemInfo.topImages
       // 商品
       this.goods = new goods(
@@ -66,6 +73,16 @@ export default {
       this.desc = data.detailInfo.desc
       // 商品参数信息
       this.params = new goodsParams(data.itemParams.info, data.itemParams.rule)
+      // 商品评论
+      if (data.rate.cRate !== 0) {
+        this.recomments = new rate(data.rate.cRate, data.rate.list)
+      }
+    })
+
+    // 推荐商品
+    getRecommend().then(res => {
+      res = res.data
+      this.recommends = res.list
     })
   },
   methods: {

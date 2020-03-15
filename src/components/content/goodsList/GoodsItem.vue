@@ -1,7 +1,7 @@
 <template>
   <div class="goods-list-item" @click="turnToDetail">
     <div class="item-img">
-      <img :src="goodsitem.show.img" @load="imgLoad" />
+      <img :src="showImg" @load="imgLoad" />
     </div>
     <div class="title">{{goodsitem.title}}</div>
     <div class="item-info">
@@ -28,6 +28,11 @@ export default {
     },
     turnToDetail() {
       this.$router.push('/detail/' + this.goodsitem.iid)
+    }
+  },
+  computed: {
+    showImg() {
+      return this.goodsitem.image || this.goodsitem.show.img
     }
   },
   filters: {
