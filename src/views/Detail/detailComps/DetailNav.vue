@@ -42,7 +42,6 @@ export default {
 
 <style scoped>
 .nav-bar {
-  background-color: #fff;
   box-shadow: 1px 0px .5px #666;
 }
 
