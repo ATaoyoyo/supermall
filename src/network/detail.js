@@ -11,7 +11,7 @@ export function getDetail(iid) {
 
 // 商品信息
 export class goods {
-  constructor(itemInfo,columns,services){
+  constructor(itemInfo, columns, services) {
     this.title = itemInfo.title
     this.desc = itemInfo.desc
     this.newPrice = itemInfo.price
@@ -25,7 +25,7 @@ export class goods {
 
 // 店铺信息
 export class shop {
-  constructor(shopInfo){
+  constructor(shopInfo) {
     this.logo = shopInfo.shopLogo
     this.name = shopInfo.name
     this.fans = shopInfo.cFans
@@ -33,5 +33,22 @@ export class shop {
     this.score = shopInfo.score
     this.goodsCount = shopInfo.cGoods
     this.shopUrl = shopInfo.shopUrl
+  }
+}
+
+// 商品参数
+export class goodsParams {
+  constructor(info, rule) {
+    this.img = info.img ? info.img : ''
+    this.info = info.set
+    this.rule = rule.tables[0]
+  }
+}
+
+// 评论
+export class rate {
+  constructor(rateCount, rateList) {
+    this.count = rateCount
+    this.list = rateList
   }
 }
