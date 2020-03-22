@@ -10,6 +10,8 @@
       <detail-recomment ref="comment" :rateList="recomments"></detail-recomment>
       <goods-list ref="recommend" :goodslist="recommends"></goods-list>
     </scroll>
+    <detail-bottom-nav></detail-bottom-nav>
+    <back-to-top v-show="isShowTop" @click.native="backToTop"></back-to-top>
   </div>
 </template>
 
@@ -21,6 +23,8 @@ import DetailShopInfo from './detailComps/DetailShopInfo'
 import DetailGoodsInfo from './detailComps/DetailGoodsInfo'
 import DetailShopParams from './detailComps/DetailShopParams'
 import DetailRecomment from './detailComps/DetailRecomment'
+import DetailBottomNav from './detailComps/DetailBottomNav'
+// import BackToTop from '@/components/content/backToTop/BackToTop'
 import Scroll from '@/components/common/scroll/Scroll.vue'
 import GoodsList from '@/components/content/goodsList/GoodsList'
 
@@ -33,6 +37,7 @@ import {
   getRecommend
 } from '@/network/detail.js'
 import { debounce } from '@/utils/index.js'
+import { backToTop } from '@/common/mixin.js'
 export default {
   name: 'Detail',
   components: {
@@ -43,9 +48,12 @@ export default {
     DetailGoodsInfo,
     DetailShopParams,
     DetailRecomment,
+    DetailBottomNav,
+    // BackToTop,
     Scroll,
     GoodsList
   },
+  mixins: [backToTop],
   data() {
     return {
       iid: null,
@@ -132,6 +140,7 @@ export default {
           }
         }
       }
+      this.listenShopTop(position)
     }
   }
 }
@@ -151,6 +160,6 @@ export default {
 }
 
 .content {
-  height: calc(100% - 44px);
+  height: calc(100% - 44px - 49px);
 }
 </style>
