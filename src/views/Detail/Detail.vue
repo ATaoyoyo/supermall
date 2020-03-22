@@ -10,7 +10,7 @@
       <detail-recomment ref="comment" :rateList="recomments"></detail-recomment>
       <goods-list ref="recommend" :goodslist="recommends"></goods-list>
     </scroll>
-    <detail-bottom-nav></detail-bottom-nav>
+    <detail-bottom-nav @addCart="addCart"></detail-bottom-nav>
     <back-to-top v-show="isShowTop" @click.native="backToTop"></back-to-top>
   </div>
 </template>
@@ -141,6 +141,16 @@ export default {
         }
       }
       this.listenShopTop(position)
+    },
+    addCart() {
+      const product = {}
+      product.iid = this.iid
+      product.img = this.topImages[0]
+      product.title = this.goods.title
+      product.desc = this.goods.desc
+      product.price = this.goods.newPrice
+      // 将商品添加到vuex
+      this.$store.dispatch('addCart', product)
     }
   }
 }

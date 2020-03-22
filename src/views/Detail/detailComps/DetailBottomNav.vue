@@ -15,19 +15,28 @@
       </div>
     </div>
     <div class="right">
-      <div class="add-cart">加入购物车</div>
+      <div class="add-cart" @click="addCart">加入购物车</div>
       <div class="buy">购买</div>
     </div>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  name: 'DetailBottomNav',
+  methods: {
+    addCart() {
+      this.$emit('addCart')
+    }
+  }
+}
 </script>
 
 <style scoped>
 .detail-bottom-nav {
-  position: relative;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
   display: flex;
   height: 49px;
   color: #333;
