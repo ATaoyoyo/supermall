@@ -1,14 +1,14 @@
 <template>
   <div id="detail">
-    <detail-nav class="detail-nav"></detail-nav>
-    <scroll class="content" ref="scroll">
+    <detail-nav class="detail-nav" @titleClick="titleClick"></detail-nav>
+    <scroll class="content" ref="scroll" :probe-type="3" @scroll="scroll">
       <detail-swiper :swiperData="topImages"></detail-swiper>
       <detail-base-info :goods="goods"></detail-base-info>
       <detail-shop-info :shop="shop"></detail-shop-info>
       <detail-goods-info :desc="desc" :imgsList="imgsList" @imgLoad="imgLoad"></detail-goods-info>
-      <detail-shop-params :params="params"></detail-shop-params>
-      <detail-recomment :rateList="recomments"></detail-recomment>
-      <goods-list :goodslist="recommends"></goods-list>
+      <detail-shop-params ref="params" :params="params"></detail-shop-params>
+      <detail-recomment ref="comment" :rateList="recomments"></detail-recomment>
+      <goods-list ref="recommend" :goodslist="recommends"></goods-list>
     </scroll>
   </div>
 </template>
@@ -24,7 +24,15 @@ import DetailRecomment from './detailComps/DetailRecomment'
 import Scroll from '@/components/common/scroll/Scroll.vue'
 import GoodsList from '@/components/content/goodsList/GoodsList'
 
-import { getDetail, goods, shop, goodsParams, rate, getRecommend } from '@/network/detail.js'
+import {
+  getDetail,
+  goods,
+  shop,
+  goodsParams,
+  rate,
+  getRecommend
+} from '@/network/detail.js'
+import { debounce } from '@/utils/index.js'
 export default {
   name: 'Detail',
   components: {
@@ -49,11 +57,15 @@ export default {
       desc: '',
       params: {},
       recomments: {},
-      recommends: []
+      recommends: [],
+      themeTopYs: [],
+      getThemeTopYs: null
     }
   },
   created() {
+    // 获取商品id
     this.iid = this.$route.params.iid
+    // 请求商品数据
     getDetail(this.iid).then(res => {
       const data = res.result
       this.topImages = data.itemInfo.topImages
@@ -78,17 +90,36 @@ export default {
         this.recomments = new rate(data.rate.cRate, data.rate.list)
       }
     })
-
     // 推荐商品
     getRecommend().then(res => {
       res = res.data
       this.recommends = res.list
     })
+    // 获取标题跳转 y 值
+    this.getThemeTopYs = debounce(
+      () => {
+        this.themeTopYs = []
+        this.themeTopYs.push(0)
+        this.themeTopYs.push(this.$refs.params.$el.offsetTop)
+        this.themeTopYs.push(this.$refs.comment.$el.offsetTop)
+        this.themeTopYs.push(this.$refs.recommend.$el.offsetTop)
+        console.log(this.themeTopYs)
+      },
+      100,
+      false
+    )
   },
   methods: {
     imgLoad() {
       this.$refs.scroll.refreshPullUp()
       this.$refs.scroll.finishPullUp()
+      this.getThemeTopYs()
+    },
+    titleClick(i) {
+      this.$refs.scroll.scrollTo(0, -this.themeTopYs[i], 300)
+    },
+    scroll(position) {
+      console.log(position)
     }
   }
 }

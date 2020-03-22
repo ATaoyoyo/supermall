@@ -1,6 +1,6 @@
 <template>
   <nav-bar class="nav-bar">
-    <template v-slot:left >
+    <template v-slot:left>
       <img src="~@/assets/img/common/back.svg" @click="backToHome" />
     </template>
     <template v-slot:center>
@@ -32,8 +32,9 @@ export default {
   methods: {
     changeCurrent(i) {
       this.currentIndex = i
+      this.$emit('titleClick', i)
     },
-    backToHome(){
+    backToHome() {
       this.$router.go(-1)
     }
   }
@@ -42,7 +43,7 @@ export default {
 
 <style scoped>
 .nav-bar {
-  box-shadow: 1px 0px .5px #666;
+  box-shadow: 1px 0px 0.5px #666;
 }
 
 .titles {
@@ -55,7 +56,7 @@ export default {
   font-size: 0.9231rem;
   color: #333;
 }
-.active{
+.active {
   color: #ff8198;
 }
 </style>

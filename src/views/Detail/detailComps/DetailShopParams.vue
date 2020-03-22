@@ -36,9 +36,6 @@ export default {
       info: this.params.info,
       rule: this.params.rule
     }
-  },
-  mounted() {
-    console.log(this.params)
   }
 }
 </script>

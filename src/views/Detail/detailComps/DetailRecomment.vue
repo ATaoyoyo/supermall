@@ -17,7 +17,7 @@
         <div class="time">{{item.created | format}}</div>
         <div class="style">{{item.style}}</div>
       </div>
-      <div class="comment-imgs">
+      <div class="comment-imgs" v-if="item.images">
         <img v-for="img in item.images" :key="img.index" :src="img" alt />
       </div>
     </div>
@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import {formatDate} from '@/utils/index'
+import { formatDate } from '@/utils/index'
 export default {
   name: 'DetailRecommend',
   props: {
@@ -100,12 +100,12 @@ export default {
 .time {
   margin-right: 0.7692rem;
 }
-.comment-imgs{
+.comment-imgs {
   padding-top: 0.7692rem;
   overflow: hidden;
   height: 6.1538rem;
 }
-.comment-imgs img{
+.comment-imgs img {
   float: left;
   width: 6.1538rem;
   margin-right: 0.7692rem;

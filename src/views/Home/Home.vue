@@ -68,7 +68,8 @@ export default {
       isShowBackToTop: false,
       offsetTop: 0,
       tabShow: false,
-      saveY: 0
+      saveY: 0,
+      itemImgListener: null
     }
   },
   created() {
@@ -83,6 +84,9 @@ export default {
       500,
       false
     )
+    this.itemImgListener = () =>{
+      debounceRefresh
+    }
     this.$bus.$on('imgLoad', () => {
       debounceRefresh()
     })
@@ -160,6 +164,7 @@ export default {
   },
   deactivated() {
     this.saveY = this.$refs.scroll.getScrollY()
+    this.$bus.$off('imgLoad', this.itemImgListener)
   }
 }
 </script>
