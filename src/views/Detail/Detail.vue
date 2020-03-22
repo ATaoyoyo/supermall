@@ -1,6 +1,6 @@
 <template>
   <div id="detail">
-    <detail-nav class="detail-nav" @titleClick="titleClick"></detail-nav>
+    <detail-nav class="detail-nav" @titleClick="titleClick" ref="titleIndex"></detail-nav>
     <scroll class="content" ref="scroll" :probe-type="3" @scroll="scroll">
       <detail-swiper :swiperData="topImages"></detail-swiper>
       <detail-base-info :goods="goods"></detail-base-info>
@@ -59,7 +59,8 @@ export default {
       recomments: {},
       recommends: [],
       themeTopYs: [],
-      getThemeTopYs: null
+      getThemeTopYs: null,
+      currentIndex: 0
     }
   },
   created() {
@@ -103,7 +104,7 @@ export default {
         this.themeTopYs.push(this.$refs.params.$el.offsetTop)
         this.themeTopYs.push(this.$refs.comment.$el.offsetTop)
         this.themeTopYs.push(this.$refs.recommend.$el.offsetTop)
-        console.log(this.themeTopYs)
+        this.themeTopYs.push(Number.MAX_VALUE)
       },
       100,
       false
@@ -119,7 +120,18 @@ export default {
       this.$refs.scroll.scrollTo(0, -this.themeTopYs[i], 300)
     },
     scroll(position) {
-      console.log(position)
+      const positionY = -position.y
+      for (let i = 0; i < this.themeTopYs.length; i++) {
+        if (this.currentIndex !== i) {
+          if (
+            positionY > this.themeTopYs[i] &&
+            positionY < this.themeTopYs[i + 1]
+          ) {
+            this.currentIndex = i
+            this.$refs.titleIndex.currentIndex = i
+          }
+        }
+      }
     }
   }
 }
