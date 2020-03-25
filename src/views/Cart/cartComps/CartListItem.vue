@@ -1,5 +1,8 @@
 <template>
   <div class="cart-list-item">
+    <div class="check">
+      <check-box :is-checked="listItem.checked" @click.native="checked"></check-box>
+    </div>
     <div class="item-img">
       <img :src="listItem.img" />
     </div>
@@ -17,14 +20,23 @@
 </template>
 
 <script>
+import CheckBox from '@/components/common/checkbox/CheckBox'
 export default {
   name: 'CartListItem',
+  components: {
+    CheckBox
+  },
   props: {
     listItem: {
       type: Object,
       default() {
         return {}
       }
+    }
+  },
+  methods: {
+    checked() {
+      this.listItem.checked = !this.listItem.checked
     }
   },
   computed: {
@@ -44,6 +56,12 @@ export default {
   overflow: hidden;
   padding-bottom: 0.3846rem;
   border-bottom: 1px solid #eee;
+}
+.check {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-right: 5px;
 }
 .item-img {
   border-radius: 0.3846rem;
@@ -66,7 +84,7 @@ export default {
 }
 .info-title,
 .info-desc {
-  width: 16rem;
+  width: 15rem;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
